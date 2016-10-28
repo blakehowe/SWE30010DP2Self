@@ -1,0 +1,23 @@
+{
+  "name": "pharmacyapp",
+  "version": "1.0.0",
+  "description": "Manage Sales Records",
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "^2.2.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blakehowe/SWE30010DP2Self.git"
+  },
+  "author": "Blake Howe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blakehowe/SWE30010DP2Self/issues"
+  },
+  "homepage": "https://github.com/blakehowe/SWE30010DP2Self#readme"
+}

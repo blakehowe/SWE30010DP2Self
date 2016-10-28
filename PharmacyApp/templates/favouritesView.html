@@ -1,0 +1,65 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="well bg-success">
+				<div class="row ">
+					<div class="col-xs-12 col-md-10">
+						<h1>Your Favourite TV Shows</h1>
+					</div>
+					<div class="col-xs-12 col-lg-2 text-right">
+						<i class="fa Example of television fa-film fa-5x faa-float animated" aria-hidden="true"></i>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12" id="dataInfo" data-ng-if="noData()">
+			<div class="well bg-success">
+				<div class="row">
+					<div class="col-xs-12">
+						<i class="fa fa-frown-o fa-5x faa-float animated" aria-hidden="true"></i>
+					</div>
+					<div class="col-xs-12">
+						<p>You have no favourites saved!</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" data-ng-repeat="favourite in favouritesData | orderBy:'Title'">
+
+			<div class="panel panel-default favPanel">
+				<div class="panel-heading">
+					<h2 class="text-center">{{favourite.Title}}</h2>
+				</div>
+				<div class="panel-body">
+					<p class="text-center genre">{{favourite.Genre}}</p>
+					<p class="text-center">Released: {{favourite.Released}}</p>
+					<img data-ng-if="favourite.Poster" class="img-responsive img-thumbnail poster" src="images/loading.gif" data-ng-src="{{favourite.Poster}}" />
+					<p class="text-center">Writers: {{favourite.Writer}}</p>
+					<div class="col-xs-12">
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="#/browse/series/{{favourite.imdbID}}">
+									<button type="button" class="btn btn-info btn-block">
+										<i class="fa fa-search fa-3x" aria-hidden="true"></i>
+										<p>Browse</p>
+									</button>
+								</a>
+							</div>
+							<div class="col-xs-6">
+								<button type="button" class="btn btn-warning btn-block" data-ng-click="removeFav(favourite)">
+									<i class="fa fa-times fa-3x" aria-hidden="true"></i>
+									<p>Remove</p>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

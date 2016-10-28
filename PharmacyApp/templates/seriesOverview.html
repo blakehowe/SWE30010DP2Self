@@ -1,0 +1,269 @@
+<div class="container-fluid">
+	<div class="well bg-success" data-ng-if="!dataLoaded">
+		<div class="row">
+			<div class="col-xs-12" id="dataInfo">
+				<div class="row">
+					<div class="col-xs-12">
+						<i class="fa fa-spinner fa-pulse fa-5x fa-fw" aria-hidden="true"></i>
+					</div>
+					<div class="col-xs-12">
+						<p>Loading Series Data...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-ng-show="dataLoaded">
+		<div class="panel panel-success seriesInfo">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div data-ng-if="seriesData.Poster != 'N/A'">
+											<div class="row">
+												<div class="col-xs-12">
+													<img class="img-responsive" data-ng-src="{{seriesData.Poster}}" />
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xs-6">
+													<p class="favourite">
+														<button type="button" class="btn btn-danger btn-block" data-ng-click="markAs(!seriesData.isFavorite)">
+															<i class="fa fa-3x" data-ng-class="{'fa-heart faa-float animated-hover' : seriesData.isFavorite , 'fa-heart-o  faa-pulse animated-hover' : !seriesData.isFavorite }"></i>
+															<p>{{seriesData.isFavorite ? "Favourited" : "Favourite"}}</p>
+														</button>
+													</p>
+												</div>
+												<div class="col-xs-6">
+													<p class="watched">
+														<a href="{{seriesData.imdbID | imdbURL}}" target="_blank">
+															<button type="button" class="btn btn-block btn-success">
+																<i class="fa fa-3x fa-star-o"></i>
+																<p>View on IMDB</p>
+															</button>
+														</a>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-9">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<h1>{{seriesData.Title}}</h1>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="row">
+													<div class="col-xs-4">
+														<div class="panel panel-default">
+															<div class="panel-heading">
+																<h4>Genre <i class="fa fa-key"></i></h4></div>
+															<div class="panel-body">
+																<p class="genre">
+																	{{seriesData.Genre}}
+																</p>
+															</div>
+														</div>
+													</div>
+													<div class="col-xs-4">
+														<div class="panel panel-default">
+															<div class="panel-heading">
+																<h4>Rating <i class="fa fa-star"></i></h4></div>
+															<div class="panel-body">
+																<p class="rating">
+																	{{seriesData.imdbRating | ratingPercentage}}
+																</p>
+															</div>
+														</div>
+													</div>
+													<div class="col-xs-4">
+														<div class="panel panel-default">
+															<div class="panel-heading">
+																<h4>Episode Runtime <i class="fa fa-clock-o"></i></h4></div>
+															<div class="panel-body">
+																<p class="rating">
+																	{{seriesData.Runtime}}
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h4>Plot <i class="fa fa-file-text-o"></i></h4></div>
+													<div class="panel-body">
+														<p class="plot">
+															{{seriesData.Plot}}
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h4>Writers <i class="fa fa-pencil"></i></h4></div>
+													<div class="panel-body">
+														<p>
+															{{seriesData.Writer}}
+														</p>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h4>Main Actors <i class="fa fa-users"></i></h4></div>
+													<div class="panel-body">
+														<p>
+															{{seriesData.Actors}}
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-success seriesInfo">
+					<div class="panel-body">
+						<h1>Seasons:</h1>
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col" id="title">Season</th>
+										<th scope="col" id="epCount">Episodes</th>
+										<th scope="col" id="watched">Watched</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="season in seasonData" data-ng-click="selectSeason($index)" data-ng-class="{selected: $index+1 == currentSeasonNum}">
+										<td headers="title">Season {{$index + 1}}</td>
+										<td headers="epCount">{{season.Episodes.length}}</td>
+										<td headers="watched">
+											<i class="fa" data-ng-class="season.Watched | watchedIcon" aria-hidden="true"></i>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="seasonsView" class="col-md-4">
+				<div class="panel panel-success seriesInfo">
+					<div class="panel-body">
+						<div class="col-xs-12" id="dataInfo" data-ng-if="!currentSeasonNum">
+							<div class="well bg-success">
+								<div class="row">
+									<div class="col-xs-12">
+										<i class="fa fa-arrow-left fa-5x faa-float animated" aria-hidden="true"></i>
+									</div>
+									<div class="col-xs-12">
+										<p>Select a Season</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="table-responsive" data-ng-show="currentSeasonNum">
+							<h1>Season {{currentSeasonNum}} Episodes:</h1>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col" id="epNumber">#</th>
+										<th scope="col" id="title">Title</th>
+										<th scope="col" id="rating">Rating</th>
+										<th scope="col" id="watched">Watched</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="episode in currentSeasonData" data-ng-click="selectEpisode($index)" data-ng-class="{selected: $index+1 == currentEpisodeNum}">
+										<td headers="epNumber">{{episode.Episode}}</td>
+										<td headers="title">{{episode.Title}}</td>
+										<td headers="rating">{{episode.imdbRating | ratingPercentage}}</td>
+										<td headers="watched">
+											<i class="fa" data-ng-class="episode.Watched | watchedIcon" aria-hidden="true"></i>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+
+				<div id="episodeView" class="panel panel-success seriesInfo">
+					<div class="panel-body">
+						<div class="col-xs-12" id="dataInfo" data-ng-if="!currentEpisodeNum">
+							<div class="well bg-success">
+								<div class="row">
+									<div class="col-xs-12">
+										<i class="fa fa-arrow-left fa-5x faa-float animated" aria-hidden="true"></i>
+									</div>
+									<div class="col-xs-12">
+										<p>Select a Episode</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 dataInfo" data-ng-show="loadingEpData">
+							<div class="row">
+								<div class="col-xs-12">
+									<i class="fa fa-spinner fa-television fa-5x faa-float animated" aria-hidden="true"></i>
+								</div>
+								<div class="col-xs-12">
+									<p>Loading Episode Data...</p>
+								</div>
+							</div>
+						</div>
+						<div class="row" id="detailPanel" data-ng-show="currentEpisodeData && !loadingEpData">
+							<div class="col-xs-12">
+								<h1>{{currentEpisodeData.Title}}</h1>
+								<p class="rating">Season {{currentSeasonNum}}, Episode {{currentEpisodeNum}}</p>
+								<p class="genre">Released: {{currentEpisodeData.Released}}</p>
+								<p class="rating">Rating: {{currentEpisodeData.imdbRating | ratingPercentage}}</p>
+							</div>
+							<div class="col-md-12" data-ng-if="currentEpisodeData.Poster != 'N/A'">
+								<img class="img-responsive img-thumbnail" src="images/loading.gif" data-ng-src="{{currentEpisodeData.Poster}}" />
+							</div>
+							<div class="col-xs-12">
+								<p class="plot">{{currentEpisodeData.Plot}}</p>
+							</div>
+							<div class="col-xs-12">
+								<button type="button" class="btn" data-ng-class="{'btn-warning' : currentEpisodeData.Watched , 'btn-success' : !currentEpisodeData.Watched }" data-ng-click="watchEp(currentEpisodeData.imdbID)">
+									<i class="fa fa-4x" data-ng-class="{'fa-check' : !currentEpisodeData.Watched , 'fa-times' : currentEpisodeData.Watched }"></i>
+									<p>Mark as {{currentEpisodeData.Watched ? "Unwatched" : "Watched"}}</p>
+								</button>
+								<a href="{{currentEpisodeData.imdbID | imdbURL}}" target="_blank">
+									<button type="button" class="btn btn-info">
+										<i class="fa fa-star fa-4x" aria-hidden="true"></i>
+										<p>View on IMDB</p>
+									</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
