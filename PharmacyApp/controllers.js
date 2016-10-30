@@ -25,7 +25,6 @@ app.controller('addController', function ($scope, $routeParams, $location, $http
 				$scope.selectedProduct = $scope.products[i];
 			}
 		}
-
 	}
 
 	$scope.submitForm = function () {
@@ -53,6 +52,8 @@ app.controller('addController', function ($scope, $routeParams, $location, $http
 //Edit Sales View Controller
 app.controller('editController', function ($scope, $routeParams, $location, $http) {
 	$scope.sales = null;
+	$scope.products = null;
+	$scope.saleSelected = null;
 
 	$scope.getSales = function () {
 		$http.get("http://localhost:3000/sales").then(function (response) {
@@ -60,9 +61,27 @@ app.controller('editController', function ($scope, $routeParams, $location, $htt
 		});
 	}
 
+	$scope.getProducts = function () {
+		$http.get("http://localhost:3000/products").then(function (response) {
+			$scope.products = response.data;
+		});
+	}
+
+	$scope.selectSale = function (sale) {
+		$scope.saleSelected = sale;
+	}
+
 	$scope.dateFromObjectId = function (objectId) {
 		return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
 	};
 
+	$scope.productByID = function (id) {
+		for (var i = 0; i < $scope.products.length; i++) {
+			if ($scope.products[i]._id == id) {
+				return $scope.products[i];
+			}
+		}
+	};
+	$scope.getProducts();
 	$scope.getSales();
 });
