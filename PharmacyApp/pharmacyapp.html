@@ -88,7 +88,18 @@
 		$(".select").dropdown({
 			"autoinit": ".select"
 		});
+
+		$.material.init()
 	</script>
+	<style>
+		.st-sort-ascent:before {
+			content: '\25B2';
+		}
+		
+		.st-sort-descent:before {
+			content: '\25BC';
+		}
+	</style>
 	<!-- Angular Controllers -->
 	<script src="controllers.js"></script>
 	<!-- Angular Configs -->

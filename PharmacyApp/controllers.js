@@ -50,7 +50,7 @@ app.controller('addController', function ($scope, $routeParams, $location, $http
 });
 
 //Edit Sales View Controller
-app.controller('editController', function ($scope, $routeParams, $location, $http) {
+app.controller('editController', function ($scope, $routeParams, $location, $http, $filter) {
 	$scope.sales = null;
 	$scope.products = null;
 	$scope.saleSelected = null;
@@ -124,6 +124,19 @@ app.controller('editController', function ($scope, $routeParams, $location, $htt
 	$scope.cancelEditing = function () {
 		$scope.viewSale = true;
 	}
+
+	$scope.rowCollection = function () {
+		return $scope.products;
+	};
+
+	$scope.getters = {
+		name: function (value) {
+			console.log($scope.productByID(value));
+			//this will sort by the length of the first name string
+			return $scope.productByID(value).name;
+		}
+	}
+
 
 
 	$scope.getProducts();
