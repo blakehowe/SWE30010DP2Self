@@ -4,8 +4,9 @@
 			<table st-table="rowCollection" class="table table-striped">
 				<thead>
 					<tr>
-						<th>Product Name</th>
 						<th>Sale Date</th>
+						<th>Product Name</th>
+
 						<th>Quantity</th>
 						<th>Unit Price</th>
 						<th>Gross Total</th>
@@ -13,8 +14,9 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in sales" ng-click="selectSale(row)">
-						<td>{{productByID(row.selectedProduct).name}}</td>
 						<td>{{dateFromObjectId(row._id) | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+						<td>{{productByID(row.selectedProduct).name}}</td>
+
 						<td>{{row.quantity}}</td>
 						<td>${{productByID(row.selectedProduct).price}}</td>
 						<td>${{row.quantity * productByID(row.selectedProduct).price}}</td>
@@ -23,6 +25,31 @@
 			</table>
 		</div>
 		<div class="col-xs-4" data-ng-if="saleSelected">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Sales ID: {{saleSelected._id}}</div>
+				<div class="panel-body">
+					<p>
+						<b>Product Name:</b> {{productByID(saleSelected.selectedProduct).name}}
+					</p>
+					<p>
+						<b>Quantity Ordered:</b> {{saleSelected.quantity}}
+					</p>
+					<p>
+						<b>Date of Sale:</b> {{saleSelected.quantity}}
+					</p>
+					<hr />
+					<p>
+						<b>Unit Price:</b> ${{productByID(saleSelected.selectedProduct).price}}
+					</p>
+					<p>
+						<b>Gross Total:</b> ${{saleSelected.quantity * productByID(saleSelected.selectedProduct).price}}
+					</p>
+					<p>
+						<button type="button" class="btn btn-warning"><i class="fa fa-pencil fa-lg"></i> Edit this record</button>
+						<button type="button" class="btn btn-danger"><i class="fa fa-trash fa-lg"></i> Delete this record</button>
+					</p>
+				</div>
+			</div>
 			<p>{{saleSelected}}</p>
 		</div>
 	</div>

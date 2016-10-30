@@ -11,7 +11,8 @@
 	<!-- Font Awesome -->
 	<link href="framework/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="framework/css/font-awesome-animation.min.css" rel="stylesheet" />
-
+	<!-- Dropdown CSS -->
+	<link href="framework/css/jquery.dropdown.css" rel="stylesheet">
 	<!-- Application Stylesheet -->
 	<link href="stylesheet.css" rel="stylesheet" />
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -68,6 +69,26 @@
 	<script src="framework/js/angular-route.min.js"></script>
 	<!-- AngularJS Smart-Table -->
 	<script src="framework/js/smart-table.js"></script>
+	<!-- Material -->
+	<script src="framework/js/material.js"></script>
+	<!-- Ripples -->
+	<script src="framework/js/ripples.js"></script>
+	<!-- Dropdown -->
+	<script src="framework/js/jquery.dropdown.js"></script>
+
+	</script>
+	<script>
+		$(document).ready(function () {
+			$(".select").dropdown({
+				"optionClass": "withripple"
+			});
+		});
+		// Init any existing .select element and then watch for new .select elements
+		// added dinamically by some black magic casted by a evil wizard
+		$(".select").dropdown({
+			"autoinit": ".select"
+		});
+	</script>
 	<!-- Angular Controllers -->
 	<script src="controllers.js"></script>
 	<!-- Angular Configs -->
