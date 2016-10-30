@@ -54,6 +54,15 @@ app.controller('editController', function ($scope, $routeParams, $location, $htt
 	$scope.sales = null;
 	$scope.products = null;
 	$scope.saleSelected = null;
+	$scope.viewSale = true;
+
+	$scope.saleEdited = false;
+
+	//editing the sale
+	$scope.selectedProduct = null;
+	$scope.changeItem = function (product) {
+		$scope.selectedProduct = $scope.productByID(product);
+	}
 
 	$scope.getSales = function () {
 		$http.get("http://localhost:3000/sales").then(function (response) {
@@ -71,6 +80,8 @@ app.controller('editController', function ($scope, $routeParams, $location, $htt
 		$scope.saleSelected = sale;
 	}
 
+
+
 	$scope.dateFromObjectId = function (objectId) {
 		return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
 	};
@@ -82,6 +93,39 @@ app.controller('editController', function ($scope, $routeParams, $location, $htt
 			}
 		}
 	};
+
+	$scope.submitEditForm = function (form) {
+		/* while compiling form , angular created this object*/
+		var data = JSON.stringify(form);
+		/* post to server*/
+		$http({
+			url: 'http://localhost:3000/sales/' + $scope.saleSelected._id,
+			method: "PUT",
+			data: data,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).success(function (data, status, headers, config) {
+			$scope.saleEdited = true;
+			$scope.cancelEditing();
+		}).error(function (data, status, headers, config) {
+
+		});
+	}
+
+	$scope.editSale = function () {
+		$scope.viewSale = false;
+	}
+
+	$scope.setFields = function () {
+		$scope.fields.selectedProduct = $scope.selectedProduct;
+	}
+
+	$scope.cancelEditing = function () {
+		$scope.viewSale = true;
+	}
+
+
 	$scope.getProducts();
 	$scope.getSales();
 });

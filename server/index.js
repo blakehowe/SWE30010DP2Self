@@ -25,6 +25,7 @@ app.get('/products/:id', productsDB.findById);
 
 app.get('/sales', salesDB.findAll);
 app.post('/sales', salesDB.addSale);
+app.put('/sales/:id', salesDB.updateSale);
 
 app.listen(3000);
 console.log('Listening on port 3000...');

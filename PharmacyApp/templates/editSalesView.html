@@ -25,7 +25,7 @@
 			</table>
 		</div>
 		<div class="col-xs-4" data-ng-if="saleSelected">
-			<div class="panel panel-primary">
+			<div class="panel panel-primary" data-ng-if="viewSale">
 				<div class="panel-heading">Sales ID: {{saleSelected._id}}</div>
 				<div class="panel-body">
 					<p>
@@ -35,7 +35,7 @@
 						<b>Quantity Ordered:</b> {{saleSelected.quantity}}
 					</p>
 					<p>
-						<b>Date of Sale:</b> {{saleSelected.quantity}}
+						<b>Date of Sale:</b> {{dateFromObjectId(saleSelected._id) | date:"MM/dd/yyyy 'at' h:mma"}}
 					</p>
 					<hr />
 					<p>
@@ -45,12 +45,37 @@
 						<b>Gross Total:</b> ${{saleSelected.quantity * productByID(saleSelected.selectedProduct).price}}
 					</p>
 					<p>
-						<button type="button" class="btn btn-warning"><i class="fa fa-pencil fa-lg"></i> Edit this record</button>
+						<button type="button" class="btn btn-warning" data-ng-click="editSale()"><i class="fa fa-pencil fa-lg"></i> Edit this record</button>
 						<button type="button" class="btn btn-danger"><i class="fa fa-trash fa-lg"></i> Delete this record</button>
 					</p>
 				</div>
 			</div>
-			<p>{{saleSelected}}</p>
+			<div class="panel panel-warning" data-ng-if="!viewSale">
+				<div class="panel-heading">Editing Sales ID: {{saleSelected._id}}</div>
+				<div class="panel-body">
+					<form name="editSaleForm" ng-submit="submitEditForm(form)">
+						<div class="form-group">
+							<label for="selectedProduct">Product:</label>
+							<select class="form-control" ng-model="form.selectedProduct" ng-options="item._id as item.name for item in products" ng-change="changeItem(form.selectedProduct)"> </select>
+						</div>
+						<div>
+							<p>
+								Unit Price: ${{selectedProduct.price}}
+							</p>
+							<div class="form-group">
+								<label for="quantity">Quantity:</label>
+								<input id="quantity" ng-model="form.quantity" type="number" name="quantity" min="1" max="9999" value="1">
+							</div>
+							<p>
+								Gross Price: ${{selectedProduct.price * form.quantity || selectedProduct.price}}
+							</p>
+
+						</div>
+						<button type="submit" class="btn btn-success">Save Sale Record</button>
+						<button type="submit" class="btn btn-warning" ng-click="cancelEditing()">Cancel Editing</button>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

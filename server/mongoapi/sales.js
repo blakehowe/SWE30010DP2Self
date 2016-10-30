@@ -68,9 +68,10 @@ exports.updateSale = function (req, res) {
 	var wine = req.body;
 	console.log('Updating wine: ' + id);
 	console.log(JSON.stringify(wine));
+	console.log(req.body);
 	db.collection('sales', function (err, collection) {
 		collection.update({
-			'_id': new BSON.ObjectID(id)
+			'_id': new mongo.ObjectID(id)
 		}, wine, {
 			safe: true
 		}, function (err, result) {
