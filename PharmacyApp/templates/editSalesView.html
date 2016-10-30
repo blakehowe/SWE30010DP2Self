@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-8">
+			<table st-table="rowCollection" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Product Name</th>
+						<th>Quantity</th>
+						<th>Sale Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in sales">
+						<td>{{row.selectedProduct}}</td>
+						<td>{{row.quantity}}</td>
+						<td>{{dateFromObjectId(row._id)}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-xs-4">
+
+		</div>
+	</div>
+</div>

@@ -56,7 +56,7 @@ exports.addSale = function (req, res) {
 					'error': 'An error has occurred'
 				});
 			} else {
-				console.log('Success: ' + JSON.stringify(result[0]));
+				//console.log('Success: ' + JSON.stringify(result[0]));
 				res.send(result[0]);
 			}
 		});

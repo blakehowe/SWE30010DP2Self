@@ -1,22 +1,24 @@
 <div class="container-fluid">
+	<div class="panel panel-success" ng-show="saleAdded">
+		<div class="panel-heading">Sale added</div>
+		<div class="panel-body">The sale record was added successfully.</div>
+	</div>
 	<form name="addSaleForm" ng-submit="submitForm()">
 		<div class="form-group">
 			<label for="selectedProduct">Product:</label>
-			<select class="form-control" ng-model="fields.selectedProduct" ng-options="item._id as item.name for item in products">
-			</select>
+			<select class="form-control" ng-model="fields.selectedProduct" ng-options="item._id as item.name for item in products" ng-change="changeItem(fields.selectedProduct)"> </select>
 		</div>
 		<div ng-show="fields.selectedProduct">
 			<p>
-				Unit Price: ${{fields.selectedProduct.price}}
+				Unit Price: ${{selectedProduct.price}}
 			</p>
 			<div class="form-group">
 				<label for="quantity">Quantity:</label>
 				<input id="quantity" ng-model="fields.quantity" type="number" name="quantity" min="1" max="9999" value="1">
 			</div>
 			<p>
-				Gross Price: ${{fields.selectedProduct.price * quantity || fields.selectedProduct.price}}
+				Gross Price: ${{selectedProduct.price * fields.quantity || selectedProduct.price}}
 			</p>
-			{{formData}}
 			<button type="submit" class="btn btn-success">Add Sale</button>
 		</div>
 	</form>
