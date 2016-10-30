@@ -8,6 +8,10 @@ app.config(['$routeProvider', function ($routeProvider) {
 			templateUrl: 'templates/editSalesView.html',
 			controller: 'editController'
 		})
+		.when('/report', {
+			templateUrl: 'templates/reportView.html',
+			controller: 'reportController'
+		})
 		.otherwise({
 			redirectTo: '/edit'
 		});
